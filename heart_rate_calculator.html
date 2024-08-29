@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Rate Zone Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Heart Rate Zone Calculator</h1>
+    <p>Enter your age to calculate your heart rate zones.</p>
+
+    <form id="heartRateForm">
+        <label for="age">Enter your age:</label>
+        <input type="number" id="age" name="age" min="1" required>
+        <button type="submit">Calculate</button>
+    </form>
+
+    <div class="result" id="result"></div>
+
+    <script>
+        document.getElementById('heartRateForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const age = parseInt(document.getElementById('age').value);
+            if (isNaN(age) || age <= 0) {
+                document.getElementById('result').textContent = 'Please enter a valid age.';
+                return;
+            }
+
+            // Calculate max heart rate
+            const maxHeartRate = 220 - age;
+
+            // Calculate Zone 2 heart rate range (60% to 70% of max)
+            const zone2Lower = Math.round(maxHeartRate * 0.6);
+            const zone2Upper = Math.round(maxHeartRate * 0.7);
+
+            // Display the result
+            document.getElementById('result').innerHTML = `
+                <p>For age ${age}, your estimated maximum heart rate is ${maxHeartRate} beats per minute.</p>
+                <p>Zone 2 heart rate range is: ${zone2Lower} - ${zone2Upper} beats per minute.</p>
+            `;
+        });
+    </script>
+
+</body>
+</html>
